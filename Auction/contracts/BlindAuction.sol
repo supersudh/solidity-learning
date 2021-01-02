@@ -24,11 +24,11 @@ contract BlindAuction {
     event LogKeccak(bytes32 theKeccak);
 
     modifier onlyBefore(uint256 _time) {
-        require(block.timestamp < _time, 'onlyBefore validation failed');
+        require(block.timestamp < _time, "onlyBefore validation failed");
         _;
     }
     modifier onlyAfter(uint256 _time) {
-        require(block.timestamp > _time, 'onlyAfter validation failed');
+        require(block.timestamp > _time, "onlyAfter validation failed");
         _;
     }
 
@@ -72,9 +72,7 @@ contract BlindAuction {
             Bid storage bidToCheck = bids[msg.sender][i];
             bytes32 kc = keccak256(abi.encodePacked(value, fake, secret));
             emit LogKeccak(kc);
-            if (
-                kc == bidToCheck.blindedBid
-            ) {
+            if (kc == bidToCheck.blindedBid) {
                 refund += bidToCheck.deposit;
                 if (!fake && bidToCheck.deposit >= value) {
                     if (placeBid(msg.sender, value)) refund -= value;
@@ -115,11 +113,11 @@ contract BlindAuction {
         return true;
     }
 
-    function getBlockTime() public view returns (uint) {
-      return block.timestamp;
+    function getBlockTime() public view returns (uint256) {
+        return block.timestamp;
     }
 
     function setBored() public {
-      bored = !bored;
+        bored = !bored;
     }
 }
